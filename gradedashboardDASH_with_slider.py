@@ -61,12 +61,14 @@ app.layout = html.Div([
         step= None
     ),
 
-    dash_table.DataTable(
-    id='table',
-    columns=[{"name": i, "id": i} for i in df.columns],
-    style_cell={'textAlign': 'center'},
-    data=df.to_dict('records'),
-    )
+    #Datatable hidden for now
+
+    # dash_table.DataTable(
+    # id='table',
+    # columns=[{"name": i, "id": i} for i in df.columns],
+    # style_cell={'textAlign': 'center'},
+    # data=df.to_dict('records'),
+    # )
 
 ])
 
