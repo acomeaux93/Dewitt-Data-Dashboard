@@ -15,7 +15,7 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 server = app.server
 
-url='https://raw.githubusercontent.com/angelojc/dewittclinton/master/creditsattemptedvsearned.csv'
+url='https://raw.githubusercontent.com/angelojc/dewittclinton/master/creditsattemptedvsearnedSecret.csv'
 
 df = pd.read_csv(url,sep=",")
 
