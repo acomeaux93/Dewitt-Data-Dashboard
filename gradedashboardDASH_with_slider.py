@@ -15,7 +15,9 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 server = app.server
 
-df = pd.read_csv('/Users/teacher/Desktop/DeWitt Data/creditsattemptedvsearned.csv')
+url='https://raw.githubusercontent.com/angelojc/dewittclinton/master/creditsattemptedvsearned.csv'
+
+df = pd.read_csv(url,sep=",")
 
 accumulation_rate = pd.Series(['float64'])
 for i in range(len(df)):
