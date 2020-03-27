@@ -45,8 +45,9 @@ percent_frame = pd.Series(percentages)
 #Build Appviewer
 #--> This is the extenstion that allows Dash apps to run in Jupyter Lab
 #IMPORTANT: Jupyter lab is different that jupyter notebook. This will not run in notebook
-from jupyterlab_dash import AppViewer
-viewer = AppViewer()
+# But if this a Heroku deployment, this should be commented out
+# from jupyterlab_dash import AppViewer
+# viewer = AppViewer()
 
 
 #Build App
@@ -54,7 +55,7 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 #Server connection below, should be uncommented in case of standalone deployment. Pairs with 'app.run_server' at bottom of page
-#server = app.server
+server = app.server
 
 
 #App Layout
@@ -195,9 +196,10 @@ def update_graph(gradelevel, slidervalue):
 
 
 #Show app in Jupyter Lab
-viewer.show(app)
+#This will be commented out if file is a Heroku deployment
+#viewer.show(app)
 
 
 #This section should be uncommented in case of standalone deployment. Pairs with 'server=app.server' higher up on page
-# if __name__ == '__main__':
-#     app.run_server(debug=True)
+if __name__ == '__main__':
+    app.run_server(debug=True)
