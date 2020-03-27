@@ -18,6 +18,8 @@ from dash.dependencies import Input, Output
 import plotly.graph_objects as go
 import pandas as pd
 
+from six.moves.urllib.parse import quote
+
 #Load and pre-process student data
 url='https://raw.githubusercontent.com/angelojc/dewittclinton/master/creditsattemptedvsearnedSecret.csv'
 
