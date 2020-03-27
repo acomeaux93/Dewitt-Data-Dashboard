@@ -1,1 +1,1 @@
-web: gunicorn gradedashboardDASH_with_slider:server
+web: gunicorn dashboardwith_slider_dropdown_download:server
