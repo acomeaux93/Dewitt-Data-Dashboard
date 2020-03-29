@@ -104,11 +104,14 @@ app.layout = html.Div([
     html.Div([ html.Br()]),
 
     html.H5(children='Description:'),
-    html.P('This program shows a dynamic graph of students and their school credit history. It displays an overlay bar graph of credits earned on top of credits attempted'),
-    html.P('The graph and table changes based on two input variables, the "Grade Level" drop down menu and "Credit accumulation percentage" slider'),
-    html.P('Users can view the names of students by hovering over the graph values'),
-    html.P('Users can click the download link to download a .csv file of table values for their custom graph'),
-    html.P('This tool could be used to identify target students per grade level that have a history of low credit attainment'),
+
+    dcc.Markdown('''
+        * This program shows a dynamic graph of students and their school credit history. It displays an overlay bar graph of credits earned on top of credits attempted
+        * The graph and table changes based on two input variables, the "Grade Level" drop down menu and "Credit accumulation percentage" slider
+        * Users can view the names of students by hovering over the graph values
+        * Users can click the download link to download a .csv file of table values for their custom graph
+        * This tool could be used to identify target students per grade level that have a history of low credit attainment
+        '''),
 
     html.Div([ html.Br()]),
 
@@ -303,7 +306,7 @@ def update_graph(gradelevel, slidervalue, password):
 #     }
 
 #Show app in Jupyter Lab
-#viewer.show(app)
+# viewer.show(app)
 
 
 #This section should be uncommented in case of standalone deployment. Pairs with 'server=app.server' higher up on page
