@@ -45,10 +45,8 @@ for i in range(len(df)):
 
 df.insert(30,"Accumulation rate", accumulation_rate)
 df['Accumulation rate']=df['Accumulation rate'].astype(float)
-df = df.round({'Accumulation rate': 3})
 
 df = df.sort_values(['Attempted']).reset_index(drop=True)
-
 
 #Load and pre-process clinton student data
 clinton_url='https://raw.githubusercontent.com/angelojc/dewittclinton/master/creditsattemptedvsearned.csv'
@@ -66,7 +64,6 @@ for i in range(len(clinton_df)):
 
 clinton_df.insert(30,"Accumulation rate", accumulation_rate)
 clinton_df['Accumulation rate']=clinton_df['Accumulation rate'].astype(float)
-clinton_df = clinton_df.round({'Accumulation rate': 3})
 
 clinton_df = clinton_df.sort_values(['Attempted']).reset_index(drop=True)
 
@@ -158,7 +155,7 @@ app.layout = html.Div([
     html.Div([
         dash_table.DataTable(
             id='chart-results',
-            columns=[{"name": i, "id": i} for i in df.loc[:,[' Count','StudentID','LastName','FirstName','OffClass','Grade','Level','Attempted','Earned','Accumulation rate']]],
+            columns=[{"name": i, "id": i} for i in df.loc[:,[' Count','StudentID','LastName','FirstName','OffClass','Grade','Level','Attempted','Earned','Total Earned','Accumulation rate']]],
             style_cell={'textAlign': 'center'},
         )
         ]
@@ -227,7 +224,7 @@ def update_download_link(gradelevel, slidervalue, password):
      Input('my-id', 'value')]
 )
 
-# Defining the Update Figure and Table Here
+# Defining the Update Figure Here
 # Has case for determining if password is set correctly, will show Clinton data if password is correct
 def update_graph(gradelevel, slidervalue, password):
 
