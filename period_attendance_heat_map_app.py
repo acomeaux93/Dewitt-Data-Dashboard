@@ -58,10 +58,11 @@ def AttendanceHeatMap():
             html.H5(children='Description:'),
 
             dcc.Markdown('''
-                * This dashboard shows the percentages and count of students in each cohort that are on or off track in terms of credit accumulation
-                * The drop down menu can be used to look at subsets of student populations: General Education, Special Education, and ENL/ESL
-                * Users can view the percentage and category totals by hovering over the graph sections
-                * __This tool could be used to identify target students per cohort that are off track in terms of credit accumulation__
+                * This dashboard shows the attendance percentage of students per class period for 1st semester
+                * It is sorted top to bottom by overall attendance rate, green corresponding to 100% semester attendance and red 0% semester attendance
+                * The drop down menus can be used to look at subsets of student cohorts and pathways
+                * Users can view per period attendance rates for individual students by hovering over the graph sections
+                * __This tool could be used to identify macro attendance trends as well as specific cohort/pathway attendance patterns__
                 '''),
         ],style={'display':'block', 'margin-left':'auto', 'margin-right':'auto','width':'95%', 'border':'3px solid black', 'padding': '10px', 'backgroundColor': 'white'}
         ),
@@ -71,7 +72,9 @@ def AttendanceHeatMap():
         html.Div([
             html.Div([
 
-                    html.H5(children='Select grade cohort and pathway'),
+                    html.Div([ html.Br(), html.Br(), html.Br(), html.Br(), html.Br()]),
+
+                    html.H5(children='Select grade cohort/pathway to filter'),
 
                     dcc.Dropdown(
                         id='cohort',
@@ -83,11 +86,11 @@ def AttendanceHeatMap():
                         options=[{'label': pathway_list[i], 'value': i} for i in range(len(pathway_list))],
                         value= 5
                     )
-            ],className="three columns"),
+            ],className="four columns"),
 
             html.Div([
                dcc.Graph(id='att_heatmap')
-            ], className="three columns")
+            ], className="four columns")
 
        ], className="row", style={'display':'block', 'margin-left':'auto', 'margin-right':'auto','width':'95%', 'border':'3px solid black', 'padding': '10px', 'backgroundColor': 'white'})
 

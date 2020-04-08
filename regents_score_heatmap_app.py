@@ -64,10 +64,10 @@ def RegentsScoreHeatMap():
             html.H5(children='Description:'),
 
             dcc.Markdown('''
-                * This dashboard shows the percentages and count of students in each cohort that are on or off track in terms of credit accumulation
-                * The drop down menu can be used to look at subsets of student populations: General Education, Special Education, and ENL/ESL
-                * Users can view the percentage and category totals by hovering over the graph sections
-                * __This tool could be used to identify target students per cohort that are off track in terms of credit accumulation__
+                * This dashboard displays the scores of students regents examinations
+                * The checkboxes can be used to filter the display by exam title, student group, cohort, and custom optional parameters
+                * Users can view the student names and exam scores by hovering over the graph sections
+                * __This tool could be used to identify target students for regents completion/college readiness/diploma eligibility__
                 '''),
         ],style={'display':'block', 'margin-left':'auto', 'margin-right':'auto','width':'95%', 'border':'3px solid black', 'padding': '10px', 'backgroundColor': 'white'}
         ),
@@ -86,7 +86,7 @@ def RegentsScoreHeatMap():
                         value = [0],
                         style={'display':'block', 'margin-left':'auto', 'margin-right':'auto','width':'90%', 'border':'3px solid black', 'padding': '10px'}
                     ),
-                ], style={'width':'20%'},
+                ], style={'width':'22%'},
                 className="four columns"),
 
                 html.Div([
@@ -99,7 +99,7 @@ def RegentsScoreHeatMap():
                         value = [0],
                         style={'display':'block', 'margin-left':'auto', 'margin-right':'auto','width':'90%', 'border':'3px solid black', 'padding': '10px'}
                     )
-                ], style={'width':'15%'},
+                ], style={'width':'16%'},
                 className="four columns"),
 
                 html.Div([
@@ -112,7 +112,7 @@ def RegentsScoreHeatMap():
                         value = [0],
                         style={'display':'block', 'margin-left':'auto', 'margin-right':'auto','width':'90%', 'border':'3px solid black', 'padding': '10px'}
                     )
-                ], style={'width':'15%'},
+                ], style={'width':'12%'},
                 className="four columns"),
 
                 html.Div([
@@ -124,7 +124,7 @@ def RegentsScoreHeatMap():
                         options=[{'label': options_list[i], 'value': i} for i in range(len(options_list))],
                         style={'display':'block', 'margin-left':'auto', 'margin-right':'auto','width':'90%', 'border':'3px solid black', 'padding': '10px'}
                     )
-                ], style={'width':'32%'},
+                ], style={'width':'37%'},
                 className="four columns"),
 
                 #html.Button('Submit', id='button', style={'vertical-align':'middle'}),
@@ -143,7 +143,7 @@ def RegentsScoreHeatMap():
 
                 html.Div([
                     dcc.Graph(id='reg_heatmap')
-                ], style={'border':'3px solid black', 'padding': '10px', 'backgroundColor': 'white'})
+                ], style={'backgroundColor': 'white'})
 
 
             ])

@@ -10,16 +10,14 @@ nav = Navbar()
 body = dbc.Container([
     dbc.Row([
         dbc.Col([
-            html.H2("Heading"),
-            html.P( """This is some sample shit"""),
-            dbc.Button("View details", color="secondary"),
+            html.H1("Welcome to SchoolDash!"),
+            html.P( """Use the navigation bar up top to navigate between the data dashboard prototypes"""),
+
         ], md=4,),
 
         dbc.Col([
-            html.H2("Graph"),
-            dcc.Graph(
-                figure={"data": [{"x": [1, 2, 3], "y": [1, 4, 9]}]}
-            ),
+            html.Img(src="https://cdn4.creativecirclemedia.com/riverdalepress/original/1510780885_8c29.jpg", height="400px"),
+            html.H3("Page Under Construction"),
         ]),
     ])
 ],className="mt-4",)

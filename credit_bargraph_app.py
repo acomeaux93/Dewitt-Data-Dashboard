@@ -186,7 +186,7 @@ def CreditBarGraph():
                 columns=[{"name": i, "id": i} for i in df.loc[:,[' Count','StudentID','LastName','FirstName','OffClass','Grade','Level','Attempted','Earned','Accumulation rate']]],
                 style_cell={'textAlign': 'center'},
             )
-            ], style={'display':'block', 'margin-left':'auto', 'margin-right':'auto','width':'96%', 'border':'3px solid black'}
+            ], style={'display':'block', 'margin-left':'auto', 'margin-right':'auto','width':'95%', 'padding': '15px', 'border':'3px solid black'}
         )
 
 
