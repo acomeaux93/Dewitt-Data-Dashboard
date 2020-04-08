@@ -1,39 +1,37 @@
-#I recommend installing the mini-condas package, comes with a ton of these modules
-#Link here for Mac install https://conda.io/projects/conda/en/latest/user-guide/install/macos.html
+#THIS IS THE CREDIT ACCUMULATION BAR GRAPH
 
-# modules needed below plus install instruction links
-# dash: https://anaconda.org/conda-forge/dash
-# dash table: https://dash.plotly.com/datatable
-# plotly: https://plotly.com/python/getting-started/
-# pandas (look at miniconda installation): https://pandas.pydata.org/pandas-docs/stable/getting_started/install.html
-# Jupyter_lab and jupyter_dash: https://github.com/plotly/jupyterlab-dash
+### Data
+import pandas as pd
+import pickle
+### Graphing
+import plotly.graph_objects as go
 
-#This program shows a dynamic graph of students and their school credit history. It displays an overlay bar graph of credits earned on top of credits attempted
-#The graph is dynamic and changes based on two input variables, "Grade Level" and "Credit accumulation percentage"
-#A datatable of results is produced along with the graph and users can download a .csv file of the data specified by their two input parameters
-
-#The code utilizes pandas to read and setup data, plotly to graph, dash to implement as a web app, and me to make a huge mess of things
-#The code is redundant, especially in the two callback functions for file download and figure updating
-#There are two datasets embedded in the code, one with student data anonymized and one with real student data
-#The user view of the data is controlled by an input field that accepts a single password and will toggle to the real student data if password is correct
-#This is fucked up and probably not ok. But I can't figure out a better way to secure the page at the moment
-
-#imports
-import os
+### Dash
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
+import dash_bootstrap_components as dbc
+from dash.dependencies import Output, Input
+
+#imports from MY program
+import os
 import dash_table
-from dash.dependencies import Input, Output
-import plotly.graph_objects as go
-import pandas as pd
 from six.moves.urllib.parse import quote
 
-#Load and pre-process anonymous student data
-safe_url= pd.read_csv('/Users/teacher/Desktop/DeWitt Data/creditsattemptedvsearnedSecret.csv')
-#safe_url='https://raw.githubusercontent.com/angelojc/dewittclinton/master/creditsattemptedvsearnedSecret.csv'
+## Navbar
+from navbar import Navbar
 
-df = pd.read_csv(safe_url,sep=",")
+nav = Navbar()
+
+
+#Load and pre-process anonymous student data
+
+#safe_url='https://raw.githubusercontent.com/angelojc/dewittclinton/master/creditsattemptedvsearnedSecret.csv'
+#df = pd.read_csv(safe_url,sep=",")
+
+df= pd.read_csv('/Users/teacher/Desktop/DeWitt Data/creditsattemptedvsearnedSecret.csv')
+print("testing testing the pre-process of data in bar graph")
+print(df.head)
 
 df[' Count'] = range(1, len(df) + 1)
 
@@ -90,98 +88,121 @@ percent_frame = pd.Series(percentages)
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
+#app.config.suppress_callback_exceptions = True
+
 #Server connection below, should be uncommented in case of standalone deployment on Heroku. Pairs with 'app.run_server' at bottom of page
 server = app.server
 
-#App Layout
-app.layout = html.Div([
 
-    #Ghetto password input field.
+def CreditBarGraph():
 
-    html.Div([ html.P('Please enter password to view dashboard with student data'),
-              dcc.Input(id='my-id', value='', type='text'),
-              html.Br()]),
+    print ("This is the credit accumulation function")
+    #App Layout
+    layout = html.Div([
 
-    html.Div([ html.Br()]),
+        nav,
 
-    html.H5(children='Description:'),
+        html.Div([ html.Br()]),
 
-    dcc.Markdown('''
-        * This program shows a dynamic graph of students and their school credit history. It displays an overlay bar graph of credits earned on top of credits attempted
-        * The graph and table changes based on two input variables, the "Grade Level" drop down menu and "Credit accumulation percentage" slider
-        * Users can view the names of students by hovering over the graph values
-        * Users can click the download link to download a .csv file of table values for their custom graph
-        * This tool could be used to identify target students per grade level that have a history of low credit attainment
-        '''),
+        html.Div([
+            html.H1(children='Student Credit Data: Credits Attempted vs. Credits Earned'),
 
-    html.Div([ html.Br()]),
+            #Ghetto password input field.
 
-    html.P('Student data is initially anonymous. To interact with real Clinton data, enter the correct password into the input field at the top of the page'),
+            html.Div([ html.P('Please enter password to view dashboard with student data. Student data is initially anonymous. To interact with real Clinton data, enter the correct password into the input field below '),
+                      dcc.Input(id='my-id', value='', type='text'),
+                      html.Br()]),
+        ], style={'display':'block', 'margin-left':'auto', 'margin-right':'auto','width':'95%', 'border':'3px solid crimson', 'padding': '10px', 'backgroundColor': 'white'}),
 
-    html.Div([ html.Br()]),
+        html.Div([ html.Br()]),
 
-    html.H5(children='Select Grade Level to View'),
+        html.Div([
+            html.H5(children='Description:'),
 
-    html.Div([
-            dcc.Dropdown(
-                id='grade_level',
-                options=[{'label': i, 'value': i} for i in ['9th Grade','10th Grade','11th Grade','12th Grade','All Grades']],
-                value= 'All Grades'
-            )
-    ]),
-
-
-
-    dcc.Graph(id='indicator-chart'),
-
-    html.H5(children='Select Credit Attainment Percentage Range to View'),
-
-    dcc.Slider(
-        id='credit_percentage',
-        min= 0.0,
-        max= 1.0,
-        value= 1.00,
-        marks= {str(percent): str("{0:.0f}".format(percent * 100) + '%')  for percent in percent_frame},
-        step= None
-    ),
-
-    html.Div([ html.Br(),html.Br()]),
-
-    html.Div([html.A(
-        'Download Graph Data as .csv',
-        id='download-link',
-        download="rawdata.csv",
-        href="",
-        target="_blank"
+            dcc.Markdown('''
+                * This program shows a dynamic graph of students and their school credit history. It displays an overlay bar graph of credits earned on top of credits attempted
+                * The graph and table changes based on two input variables, the "Grade Level" drop down menu and "Credit accumulation percentage" slider
+                * Users can view the names of students by hovering over the graph values
+                * Users can click the download link to download a .csv file of table values for their custom graph
+                * __This tool could be used to identify target students per grade level that have a history of low credit attainment__
+                '''),
+        ],style={'display':'block', 'margin-left':'auto', 'margin-right':'auto','width':'95%', 'border':'3px solid black', 'padding': '10px', 'backgroundColor': 'white'}
         ),
-        html.P('Clicking this link will download a .csv file with table data of the current set graph. Data will contain information presented below plus extra columns')
-    ]),
 
-    html.Div([ html.Br()]),
+        html.Div([ html.Br()]),
 
-    html.Div([
-        dash_table.DataTable(
-            id='chart-results',
-            columns=[{"name": i, "id": i} for i in df.loc[:,[' Count','StudentID','LastName','FirstName','OffClass','Grade','Level','Attempted','Earned','Accumulation rate']]],
-            style_cell={'textAlign': 'center'},
+
+        html.Div([ html.Br()]),
+
+        html.Div([
+            html.H5(children='Select Grade Level to View'),
+
+            html.Div([
+                    dcc.Dropdown(
+                        id='grade_level',
+                        options=[{'label': i, 'value': i} for i in ['9th Grade','10th Grade','11th Grade','12th Grade','All Grades']],
+                        value= 'All Grades'
+                    )
+            ]),
+
+
+
+            dcc.Graph(id='indicator-chart'),
+
+            html.H5(children='Select Credit Attainment Percentage Range to View'),
+
+            dcc.Slider(
+                id='credit_percentage',
+                min= 0.0,
+                max= 1.0,
+                value= 1.00,
+                marks= {str(percent): str("{0:.0f}".format(percent * 100) + '%')  for percent in percent_frame},
+                step= None
+            ),
+
+            html.Div([ html.Br(),html.Br()]),
+
+        ], style={'display':'block', 'margin-left':'auto', 'margin-right':'auto','width':'95%', 'border':'3px solid black', 'padding': '10px', 'backgroundColor': 'white'}),
+
+
+        html.Div([ html.Br(),html.Br()]),
+
+        html.Div([html.A(
+            'Download Graph Data as .csv',
+            id='download-link',
+            download="rawdata.csv",
+            href="",
+            target="_blank"
+            ),
+            html.P('Clicking this link will download a .csv file with table data of the current set graph. Data will contain information presented below plus extra columns')
+        ],style={'display':'block', 'margin-left':'auto', 'margin-right':'auto','width':'95%', 'border':'3px solid black', 'padding': '10px', 'backgroundColor': 'white'}
+        ),
+
+        html.Div([ html.Br()]),
+
+        html.Div([
+            dash_table.DataTable(
+                id='chart-results',
+                columns=[{"name": i, "id": i} for i in df.loc[:,[' Count','StudentID','LastName','FirstName','OffClass','Grade','Level','Attempted','Earned','Accumulation rate']]],
+                style_cell={'textAlign': 'center'},
+            )
+            ], style={'display':'block', 'margin-left':'auto', 'margin-right':'auto','width':'96%', 'border':'3px solid black'}
         )
-        ]
-    )
 
 
-])
+    ], style={'backgroundColor': 'whitesmoke'})
 
-# Callback for file download
-@app.callback(
-    Output('download-link', 'href'),
-    [Input('grade_level', 'value'),
-     Input('credit_percentage', 'value'),
-     Input('my-id', 'value')]
-)
+    return layout
+
+app.layout = CreditBarGraph()
+
+    # Callback for file download
 
 # Defining the file download link
 # Has case for determining if password is set correctly, will show Clinton data if password is correct
 def update_download_link(gradelevel, slidervalue, password):
+
+    print("HELLLOOO IS ANYONE HERE")
 
     if password == 'clintonhs':
         filter_df = clinton_df[clinton_df['Accumulation rate'] <= slidervalue]
@@ -222,18 +243,13 @@ def update_download_link(gradelevel, slidervalue, password):
     return csv_string
 
 
-# Callback for Updating the figure
-@app.callback(
-    [Output('indicator-chart', 'figure'),
-     Output('chart-results', 'data')],
-    [Input('grade_level', 'value'),
-     Input('credit_percentage', 'value'),
-     Input('my-id', 'value')]
-)
+
 
 # Defining the Update Figure and Table Here
 # Has case for determining if password is set correctly, will show Clinton data if password is correct
-def update_graph(gradelevel, slidervalue, password):
+def update_credit_bar_graph(gradelevel, slidervalue, password):
+
+    print("HELLLO!!!!!!")
 
     if password == 'clintonhs':
         filter_df = clinton_df[clinton_df['Accumulation rate'] <= slidervalue]
@@ -271,7 +287,6 @@ def update_graph(gradelevel, slidervalue, password):
 
     graph_me[' Count'] = range(1, len(graph_me) + 1)
 
-
 # Create graph
     figure = go.Figure(
         data=[
@@ -288,28 +303,9 @@ def update_graph(gradelevel, slidervalue, password):
 
     return figure, data
 
-# Return the Data Here
-# This was for the old graph object notation. This could only return one item, the graph object. I changed notations to the one above
-# because I needed to return two variables so I wrapped up the graph into a figure object
-
-#     return {
-#         'data': [
-#             {'x':graph_me.index, 'y':graph_me['Attempted'], 'type': 'bar', 'name': 'Attempted', 'text': "Student Name " + graph_me['FirstName'] +' '+ graph_me['LastName'], 'hoverinfo': 'text'},
-#             {'x':graph_me.index, 'y':graph_me['Earned'], 'type': 'bar', 'name': 'Earned', 'text': "Student Name " + graph_me['FirstName'] +' '+ graph_me['LastName'], 'hoverinfo': 'text'}
-#         ],
-#         'layout': {
-#             'title': 'Credits Attempted/Earned by Student',
-#             'xaxis': dict(title='Student'),
-#             'yaxis':dict(title='Credits'),
-#             'barmode':'overlay',
-#             'hovermode':'closest'
-#         }
-#     }
-
 #Show app in Jupyter Lab
-# viewer.show(app)
-
+#viewer.show(app)
 
 #This section should be uncommented in case of standalone deployment. Pairs with 'server=app.server' higher up on page
-if __name__ == '__main__':
-    app.run_server(debug=True)
+    #if __name__ == '__main__':
+        #app.run_server(debug=True)

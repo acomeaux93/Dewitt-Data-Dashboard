@@ -1,1 +1,1 @@
-web: gunicorn dashboardwith_slider_dropdown_download:server
+web: gunicorn index:server
