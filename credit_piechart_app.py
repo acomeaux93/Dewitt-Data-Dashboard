@@ -29,7 +29,10 @@ from plotly.subplots import make_subplots
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
-df = pd.read_csv('/Users/teacher/Desktop/DeWitt Data/creditsattemptedvsearnedpiechart.csv')
+#df = pd.read_csv('/Users/teacher/Desktop/DeWitt Data/creditsattemptedvsearnedpiechart.csv')
+
+clinton_url='https://raw.githubusercontent.com/angelojc/dewittclinton/master/creditsattemptedvsearnedpiechart.csv'
+df = pd.read_csv(clinton_url,sep=",")
 
 df[' Count'] = range(1, len(df) + 1)
 

@@ -24,7 +24,11 @@ nav = Navbar()
 # from jupyterlab_dash import AppViewer
 # viewer = AppViewer()
 
-df = pd.read_csv('/Users/teacher/Desktop/DeWitt Data/1stsemestertotaldatafordataframe2.csv', dtype={"Student Name": object, "Off Class": object})
+#df = pd.read_csv('/Users/teacher/Desktop/DeWitt Data/1stsemestertotaldatafordataframe2.csv', dtype={"Student Name": object, "Off Class": object})
+
+clinton_url='https://raw.githubusercontent.com/angelojc/dewittclinton/master/1stsemestertotaldatafordataframe2.csv'
+df = pd.read_csv(clinton_url,sep=",")
+
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)

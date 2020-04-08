@@ -26,10 +26,10 @@ nav = Navbar()
 
 #Load and pre-process anonymous student data
 
-#safe_url='https://raw.githubusercontent.com/angelojc/dewittclinton/master/creditsattemptedvsearnedSecret.csv'
-#df = pd.read_csv(safe_url,sep=",")
+safe_url='https://raw.githubusercontent.com/angelojc/dewittclinton/master/creditsattemptedvsearnedSecret.csv'
+df = pd.read_csv(safe_url,sep=",")
 
-df= pd.read_csv('/Users/teacher/Desktop/DeWitt Data/creditsattemptedvsearnedSecret.csv')
+#df= pd.read_csv('/Users/teacher/Desktop/DeWitt Data/creditsattemptedvsearnedSecret.csv')
 print("testing testing the pre-process of data in bar graph")
 print(df.head)
 
