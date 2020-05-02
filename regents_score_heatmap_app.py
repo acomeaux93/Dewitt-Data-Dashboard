@@ -64,7 +64,6 @@ def RegentsScoreHeatMap():
              html.Button('Back to Admin Index', id='btn-nclicks-1', n_clicks=0),
              html.A(html.Button('Back to Admin Index', className='three columns'),
                 href='https://google.com')
-            ),
         ], style={'display':'block', 'margin-left':'auto', 'margin-right':'auto','width':'95%', 'border':'3px solid crimson', 'padding': '10px', 'backgroundColor': 'white'}),
 
 
