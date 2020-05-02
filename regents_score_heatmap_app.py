@@ -61,7 +61,7 @@ def RegentsScoreHeatMap():
              html.A(html.Button('Back to Admin Index', className='three columns'),
                 href='https://regents-max.herokuapp.com/index'),
 
-            html.Div([ html.Br()],[ html.Br()],[ html.Br()],[ html.Br()]),
+            html.Div([ html.Br()],[ html.Br()],[ html.Br()],[ html.Br()], [ html.Br()], [ html.Br()], [ html.Br()], [ html.Br()]),
         ], style={'display':'block', 'margin-left':'auto', 'margin-right':'auto','width':'95%', 'border':'3px solid crimson', 'padding': '10px', 'backgroundColor': 'white'}),
 
 
