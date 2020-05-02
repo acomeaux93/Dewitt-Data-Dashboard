@@ -54,10 +54,7 @@ def RegentsScoreHeatMap():
 
         html.Div([ html.Br()]),
 
-        html.Div([
-             html.H1(children='TESTING TESTING')
-        ], style={'display':'block', 'margin-left':'auto', 'margin-right':'auto','width':'95%', 'border':'3px solid crimson', 'padding': '10px', 'backgroundColor': 'white'}),
-
+    
 
         html.Div([
              html.H1(children='Student Regents Data: Regents Completion Heat Map'),
@@ -66,7 +63,7 @@ def RegentsScoreHeatMap():
         ], style={'display':'block', 'margin-left':'auto', 'margin-right':'auto','width':'95%', 'border':'3px solid crimson', 'padding': '10px', 'backgroundColor': 'white'}),
 
 
-        html.Div([ html.Br()]),
+        html.Div([ html.Br()],[ html.Br()],[ html.Br()],[ html.Br()]),
 
          html.Div([
             html.H5(children='Description:'),
